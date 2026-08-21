@@ -98,10 +98,10 @@
     const page = paginateInsuranceProducts(filteredRows(), currentPage);
     currentPage = page.page;
     const visibleRows = page.rows;
-    if (!visibleRows.length) return '<tr><td colspan="10"><div class="ipm-empty">未找到符合条件的保险产品</div></td></tr>';
+    if (!visibleRows.length) return '<tr><td colspan="9"><div class="ipm-empty">未找到符合条件的保险产品</div></td></tr>';
     return visibleRows.map((row) => {
       const index = rows.indexOf(row), active = row.status === '销售中';
-      return `<tr data-product-row="${index}"><td><div class="ipm-product"><span class="ipm-mark">保</span><span><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.code)}</small></span></div></td><td>${escapeHtml(row.business)}</td><td>${escapeHtml(row.coverage)}</td><td>${escapeHtml(row.premium)}</td><td>${escapeHtml(row.version)}</td><td><button class="ipm-btn link ipm-file" data-ipm-download="${index}" title="下载 ${escapeHtml(row.attachment.name)}"><span>📎 ${escapeHtml(row.attachment.name)}</span></button></td><td>${escapeHtml(row.operator)}</td><td>${escapeHtml(row.updated)}</td><td><span class="ipm-tag ${active ? 'active' : 'disabled'}">${row.status}</span></td><td><div class="ipm-actions"><button class="ipm-btn link" data-ipm-view="${index}">查看</button><button class="ipm-btn link ${active ? 'danger' : 'success'}" data-ipm-toggle="${index}">${active ? '停用' : '启用'}</button></div></td></tr>`;
+      return `<tr data-product-row="${index}"><td><div class="ipm-product"><span class="ipm-mark">保</span><span><b>${escapeHtml(row.name)}</b><small>${escapeHtml(row.code)}</small></span></div></td><td>${escapeHtml(row.business)}</td><td>${escapeHtml(row.coverage)}</td><td>${escapeHtml(row.premium)}</td><td>${escapeHtml(row.version)}</td><td><button class="ipm-btn link ipm-file" data-ipm-download="${index}" title="下载 ${escapeHtml(row.attachment.name)}"><span>📎 ${escapeHtml(row.attachment.name)}</span></button></td><td>${escapeHtml(row.operator)}</td><td><span class="ipm-tag ${active ? 'active' : 'disabled'}">${row.status}</span></td><td><div class="ipm-actions"><button class="ipm-btn link" data-ipm-view="${index}">查看</button><button class="ipm-btn link ${active ? 'danger' : 'success'}" data-ipm-toggle="${index}">${active ? '停用' : '启用'}</button></div></td></tr>`;
     }).join('');
   }
 
@@ -113,7 +113,7 @@
   }
 
   function renderInsurancePageMarkup() {
-    return `<div class="ipm-shell" data-insurance-self-operated="true"><section class="panel table-panel ipm-card"><div class="capability-toolbar ipm-card-head"><div class="ipm-toolbar"><label class="ipm-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input class="ipm-input" data-ipm-search placeholder="搜索产品名称、产品代码、适用业务…" value="${escapeHtml(keyword)}"></label><select class="ipm-select" data-ipm-status><option value="all"${statusFilter === 'all' ? ' selected' : ''}>全部状态</option><option value="销售中"${statusFilter === '销售中' ? ' selected' : ''}>销售中</option><option value="已停用"${statusFilter === '已停用' ? ' selected' : ''}>已停用</option></select></div><span>共 ${filteredRows().length} 个产品</span></div><div class="ipm-table-wrap"><table class="ipm-table"><thead><tr><th>产品名称 / 产品代码</th><th>适用业务</th><th>保障金额</th><th>参考保费</th><th>条款版本</th><th>产品附件</th><th>操作人</th><th>更新时间</th><th>状态</th><th>操作</th></tr></thead><tbody data-ipm-tbody>${renderTableRows()}</tbody></table></div><div data-ipm-pagination>${renderPaginationMarkup()}</div></section></div>`;
+    return `<div class="ipm-shell" data-insurance-self-operated="true"><section class="panel table-panel ipm-card"><div class="capability-toolbar ipm-card-head"><div class="ipm-toolbar"><label class="ipm-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg><input class="ipm-input" data-ipm-search placeholder="搜索产品名称、产品代码、适用业务…" value="${escapeHtml(keyword)}"></label><select class="ipm-select" data-ipm-status><option value="all"${statusFilter === 'all' ? ' selected' : ''}>全部状态</option><option value="销售中"${statusFilter === '销售中' ? ' selected' : ''}>销售中</option><option value="已停用"${statusFilter === '已停用' ? ' selected' : ''}>已停用</option></select></div><span>共 ${filteredRows().length} 个产品</span></div><div class="ipm-table-wrap"><table class="ipm-table"><thead><tr><th>产品名称 / 产品代码</th><th>适用业务</th><th>保障金额</th><th>参考保费</th><th>条款版本</th><th>产品附件</th><th>操作人</th><th>状态</th><th>操作</th></tr></thead><tbody data-ipm-tbody>${renderTableRows()}</tbody></table></div><div data-ipm-pagination>${renderPaginationMarkup()}</div></section></div>`;
   }
 
   function renderInsuranceHeaderActionMarkup() {
@@ -172,10 +172,14 @@
     mountedRoot.querySelector('[data-ipm-modal]').hidden = true; refreshList(); showToast('保险产品已新增并进入销售中');
   }
 
+  function renderInsuranceDetailMarkup(row) {
+    const labels = [['产品名称', row.name], ['产品代码', row.code], ['适用业务', row.business], ['保障金额', row.coverage], ['参考保费', row.premium], ['条款版本', row.version], ['产品附件', row.attachment.name], ['状态', row.status], ['操作人', row.operator]];
+    return `<dl class="ipm-detail-grid">${labels.map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl>`;
+  }
+
   function showDetail(index) {
     const row = rows[index]; if (!row) return;
-    const labels = [['产品名称', row.name], ['产品代码', row.code], ['适用业务', row.business], ['保障金额', row.coverage], ['参考保费', row.premium], ['条款版本', row.version], ['产品附件', row.attachment.name], ['状态', row.status], ['操作人', row.operator], ['更新时间', row.updated]];
-    mountedRoot.querySelector('[data-ipm-detail-body]').innerHTML = `<dl class="ipm-detail-grid">${labels.map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`).join('')}</dl>`;
+    mountedRoot.querySelector('[data-ipm-detail-body]').innerHTML = renderInsuranceDetailMarkup(row);
     mountedRoot.querySelector('[data-ipm-detail]').hidden = false;
   }
 
@@ -271,5 +275,5 @@
     let attempts = 0; const timer = setInterval(() => { attempts += 1; if (connect() || attempts > 100) clearInterval(timer); }, 100);
   }
 
-  return { validateInsuranceProduct, createInsuranceProduct, toggleInsuranceProductStatus, paginateInsuranceProducts, changeInsurancePage, renderInsurancePageMarkup, renderInsuranceHeaderActionMarkup, renderInsuranceModalMarkup, renderInsuranceStyles, mount };
+  return { validateInsuranceProduct, createInsuranceProduct, toggleInsuranceProductStatus, paginateInsuranceProducts, changeInsurancePage, renderInsurancePageMarkup, renderInsuranceDetailMarkup, renderInsuranceHeaderActionMarkup, renderInsuranceModalMarkup, renderInsuranceStyles, mount };
 });
