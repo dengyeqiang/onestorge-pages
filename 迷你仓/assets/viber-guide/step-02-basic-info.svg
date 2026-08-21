@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs><filter id="s"><feDropShadow dx="0" dy="22" stdDeviation="28" flood-color="#21183f" flood-opacity=".22"/></filter></defs>
+  <rect width="1600" height="1000" fill="#f1f0f4"/><rect width="1600" height="1000" fill="#25212f" opacity=".30"/>
+  <rect x="340" y="90" width="920" height="820" rx="20" fill="#fff" filter="url(#s)"/>
+  <text x="390" y="150" font-family="Arial,'Microsoft YaHei'" font-size="30" font-weight="700" fill="#24272d">新增 Viber</text><text x="1190" y="150" font-family="Arial" font-size="34" fill="#8d9299">×</text><path d="M340 182h920" stroke="#e3e4e8"/>
+  <g font-family="Arial,'Microsoft YaHei'"><circle cx="425" cy="232" r="18" fill="#6f40ff"/><text x="419" y="239" font-size="16" fill="#fff">1</text><text x="460" y="239" font-size="17" font-weight="700" fill="#6f40ff">基本信息</text><path d="M550 232h260" stroke="#dfe1e7"/><circle cx="845" cy="232" r="18" fill="#eff0f2"/><text x="839" y="239" font-size="16" fill="#a3a7ae">2</text><text x="880" y="239" font-size="17" fill="#92979f">连接配置</text></g>
+  <text x="390" y="330" font-family="Arial,'Microsoft YaHei'" font-size="18" font-weight="600" fill="#3d424a">渠道名称 *</text><rect x="390" y="352" width="820" height="62" rx="10" fill="#fff" stroke="#daddE4"/><text x="412" y="391" font-family="Arial,'Microsoft YaHei'" font-size="18" fill="#30353c">欧洲 Viber 客服</text>
+  <text x="390" y="474" font-family="Arial,'Microsoft YaHei'" font-size="18" font-weight="600" fill="#3d424a">渠道描述</text><rect x="390" y="496" width="820" height="160" rx="10" fill="#fff" stroke="#daddE4"/><text x="412" y="536" font-family="Arial,'Microsoft YaHei'" font-size="18" fill="#6f747c">承接欧洲地区客户的产品咨询、订单与售后服务</text>
+  <path d="M340 822h920" stroke="#e3e4e8"/><rect x="1050" y="842" width="160" height="54" rx="9" fill="#6f40ff"/><text x="1084" y="877" font-family="Arial,'Microsoft YaHei'" font-size="18" fill="#fff">下一步</text><rect x="940" y="842" width="92" height="54" rx="9" fill="#fff" stroke="#daddE4"/><text x="966" y="877" font-family="Arial,'Microsoft YaHei'" font-size="18" fill="#50565f">取消</text>
+  <text x="340" y="955" font-family="Arial,'Microsoft YaHei'" font-size="15" fill="#777d86">系统界面 · 填写 Viber 渠道基本信息</text>
+</svg>
