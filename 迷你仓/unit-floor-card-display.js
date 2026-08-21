@@ -8,6 +8,12 @@
 })(typeof window !== 'undefined' ? window : globalThis, function (root) {
   'use strict';
 
+  const COMPACT_UNIT_CARD_MAX_WIDTH = 1919;
+
+  function isCompactUnitCardViewport(width) {
+    return Number(width) <= COMPACT_UNIT_CARD_MAX_WIDTH;
+  }
+
   function classifyUnitSize(size) {
     const squareFeet = Number.parseFloat(String(size || ''));
     if (!Number.isFinite(squareFeet)) return '';
@@ -77,6 +83,12 @@
     .home-unit .unit-card-countdown,.store-plan-unit .unit-card-countdown { box-sizing:border-box; width:100%; margin:0; overflow:hidden; text-overflow:ellipsis; padding:0 2px; border-radius:0; background:transparent; color:currentColor; opacity:.68; font-size:clamp(7px,.6vw,9px); font-style:normal; font-weight:600; line-height:1.1; white-space:nowrap; }
     .home-unit .unit-card-countdown.urgent,.store-plan-unit .unit-card-countdown.urgent { width:auto; max-width:calc(100% - 4px); padding:2px 5px; border-radius:8px; background:#fff0f0; color:#c62828; opacity:1; font-weight:700; }
     .theme-dark .home-unit .unit-card-countdown.urgent,.theme-dark .store-plan-unit .unit-card-countdown.urgent { background:rgba(198,40,40,.22); color:#ff8a8a; }
+    @media (max-width:${COMPACT_UNIT_CARD_MAX_WIDTH}px) {
+      .home-unit,.store-plan-unit { gap:6px; padding:6px 2px; }
+      .home-unit .unit-card-size,.store-plan-unit .unit-card-size { display:none; }
+      .home-unit .unit-card-id,.store-plan-unit .unit-card-id { font-size:clamp(8px,.72vw,10px); }
+      .home-unit .unit-card-countdown,.store-plan-unit .unit-card-countdown { font-size:clamp(7px,.66vw,9px); }
+    }
   `;
 
   function ensureStyle(scope) {
@@ -114,6 +126,7 @@
     }
     button.replaceChildren(...nodes);
     button.dataset.unitCardSignature = signature;
+    button.setAttribute('title', `${details.size} · ${details.sizeType}`);
     button.setAttribute('aria-label', [id, details.size, details.sizeType, details.countdown].filter(Boolean).join('，'));
   }
 
@@ -171,5 +184,5 @@
     connect();
   }
 
-  return { classifyUnitSize, getLeaseCountdownMeta, formatLeaseCountdown, getUnitCardDetails, getStoreSpaceUnitDetails, parseExpiringCount, decorateFloor, decorateStoreSpace, ensureStyle, init };
+  return { isCompactUnitCardViewport, classifyUnitSize, getLeaseCountdownMeta, formatLeaseCountdown, getUnitCardDetails, getStoreSpaceUnitDetails, parseExpiringCount, decorateFloor, decorateStoreSpace, ensureStyle, init };
 });
